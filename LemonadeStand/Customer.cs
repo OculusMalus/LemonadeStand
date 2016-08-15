@@ -24,12 +24,12 @@ namespace LemonadeStand
         {
             customerCount++;
         }
+
         public void Print()
         {
-            Console.WriteLine("Lemonade Fervor is {0}", _lemonadeFervor,"\n");
-            Console.WriteLine("Thirst Level is {0}", _thirstLevel,"\n");
-            Console.WriteLine("Chance of Purchase is {0},", _chanceOfPurchase, "\n");
-
+            Console.Write("\nLemonade Fervor is {0}\t", _lemonadeFervor);
+            Console.Write("Thirst Level is {0}\t", _thirstLevel);
+            Console.Write("Chance of Purchase is {0}\t", _chanceOfPurchase,"\n");
         }
 
         public int SetLemonadeFervor()

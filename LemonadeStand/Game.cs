@@ -39,10 +39,9 @@ namespace LemonadeStand
 
         public void TakeTurn()
         {
+            Customer _customer = new Customer();
             for (int i = 0; i < _today.numberOfPotentialCustomers; i++)
             {
-                Customer _customer = new Customer();
-
                 _customer.SetLemonadeFervor();
                 _customer.CalculateThirst(_today._actualHighTemperature, _today._willTheSunShine);
                 _customer.CalculateChanceOfPurchase(_today._actualHighTemperature);
@@ -52,9 +51,9 @@ namespace LemonadeStand
                 }
 
                 customerCount++;
-                _customer.Print();
+                //_customer.Print(); //un-comment to see each instance of a customer and their preferences
                 //Console.ReadKey();
-                
+
             }
             _today.PrintActualWeather();
             Console.WriteLine("\nYou sold {0} cups of lemonade to {1} potential customers.", numberOfCupsSold, customerCount);

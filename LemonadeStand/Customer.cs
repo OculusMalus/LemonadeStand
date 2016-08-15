@@ -61,5 +61,7 @@ namespace LemonadeStand
             }
             return _chanceOfPurchase;
         }
+
+        
     }
 }

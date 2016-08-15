@@ -12,6 +12,7 @@ namespace LemonadeStand
         public int _actualHighTemperature;
         public bool _willTheSunShine;
         string _sunshine;
+        public int numberOfPotentialCustomers;
         Random rnd = new Random();
 
         public void PrintForecast()
@@ -73,6 +74,12 @@ namespace LemonadeStand
                 _willTheSunShine = false;
             }
             return _willTheSunShine;
+        }
+
+        public int CalculateNumberOfPotentialCustomers()
+        {
+            numberOfPotentialCustomers = 50 + (_actualHighTemperature - 60) * 5;
+            return numberOfPotentialCustomers;
         }
 
 

@@ -20,8 +20,9 @@ namespace LemonadeStand
         {
             Console.WriteLine("Hello, welcome to the world of Lemonade Stand! Please enter your name: \n");
             name = Console.ReadLine();
-            Console.ReadKey();
-            return name;        }
+            return name;
+        }
+
     }
      
     

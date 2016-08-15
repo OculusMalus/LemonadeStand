@@ -46,7 +46,6 @@ namespace LemonadeStand
                 _customer.SetLemonadeFervor();
                 _customer.CalculateThirst(_today._actualHighTemperature, _today._willTheSunShine);
                 _customer.CalculateChanceOfPurchase(_today._actualHighTemperature);
-                Console.WriteLine(_customer._chanceOfPurchase);
                 if (_customer._chanceOfPurchase == 100)
                 {
                     numberOfCupsSold++;
@@ -54,7 +53,7 @@ namespace LemonadeStand
 
                 customerCount++;
                 _customer.Print();
-                Console.ReadKey();
+                //Console.ReadKey();
                 
             }
             _today.PrintActualWeather();

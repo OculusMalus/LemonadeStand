@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Customer
+    class Customer 
     {
         //member variables
         public int _lemonadeFervor;
         public int _thirstLevel;
         public int _chanceOfPurchase;
+        public int _priceBoost;
         public int customerCount = 0;
         Random rnd = new Random();
 
-        //public int _actualTemperature = 80; //set this variable in this location for testing purposes only
-                                            //remove this vaiable and put it in the weather class when it's ready to go
-
-        //need a constructor?
-       
-        public Customer ()
+            
+        public Customer()
         {
-            customerCount++;
+            //customerCount++;
+            //this._lemonadeFervor = _lemonadeFervor;
+            //this._thirstLevel = _thirstLevel;
+            //this._chanceOfPurchase = _chanceOfPurchase;
         }
 
         public void Print()
@@ -30,6 +30,7 @@ namespace LemonadeStand
             Console.Write("\nLemonade Fervor is {0}\t", _lemonadeFervor);
             Console.Write("Thirst Level is {0}\t", _thirstLevel);
             Console.Write("Chance of Purchase is {0}\t", _chanceOfPurchase,"\n");
+            Console.Write("Price boost is {0}\n", _priceBoost);
         }
 
         public int SetLemonadeFervor()
@@ -50,7 +51,7 @@ namespace LemonadeStand
 
         public int CalculateChanceOfPurchase(int _actualTemperature)
         {
-            int chance = _lemonadeFervor + _thirstLevel + (_actualTemperature-80);
+            int chance = _lemonadeFervor + _thirstLevel + (_actualTemperature-80) + _priceBoost ;
             if (chance > 100)
             {
                 _chanceOfPurchase = 100;
@@ -61,6 +62,19 @@ namespace LemonadeStand
             }
             return _chanceOfPurchase;
         }
+
+        public int CalculatePricePointPreference(decimal cupPrice)
+        {
+            int _cupPriceInteger = Decimal.ToInt32(cupPrice*100);
+            _priceBoost = -(_cupPriceInteger - 100);
+            return _priceBoost;
+        }
+
+        
+        //int PriceDecision()
+        //{
+        //    if (_player.cupPrice )
+        //}
 
         
     }

@@ -19,9 +19,9 @@ namespace LemonadeStand
         {
             if (_willTheSunShine == true)
             {
-                _sunshine = "sunshine";
+                _sunshine = "sunny";
             }
-            else _sunshine = "clouds";
+            else _sunshine = "cloudy";
             Console.WriteLine("The forecast for today is {0} with a high of {1}F.", _sunshine, _forecastHighTemperature, "\n");
 
         }

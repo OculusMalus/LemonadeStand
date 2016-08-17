@@ -17,20 +17,9 @@ namespace LemonadeStand
         Random rnd = new Random();
 
             
-        public Customer()
-        {
-            //customerCount++;
-            //this._lemonadeFervor = _lemonadeFervor;
-            //this._thirstLevel = _thirstLevel;
-            //this._chanceOfPurchase = _chanceOfPurchase;
-        }
-
-        public void Print()
-        {
-            Console.Write("\nLemonade Fervor is {0}\t", _lemonadeFervor);
-            Console.Write("Thirst Level is {0}\t", _thirstLevel);
-            Console.Write("Chance of Purchase is {0}\t", _chanceOfPurchase,"\n");
-            Console.Write("Price boost is {0}\n", _priceBoost);
+        public Customer()                           //constructor sets fervor upon instantiation
+        { 
+            SetLemonadeFervor();
         }
 
         public int SetLemonadeFervor()
@@ -65,17 +54,10 @@ namespace LemonadeStand
 
         public int CalculatePricePointPreference(decimal cupPrice)
         {
-            int _cupPriceInteger = Decimal.ToInt32(cupPrice*100);
+            int _cupPriceInteger = Decimal.ToInt32(cupPrice * 100);
             _priceBoost = -(_cupPriceInteger - 100);
             return _priceBoost;
         }
 
-        
-        //int PriceDecision()
-        //{
-        //    if (_player.cupPrice )
-        //}
-
-        
     }
 }

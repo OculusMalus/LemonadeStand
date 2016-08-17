@@ -11,18 +11,27 @@ namespace LemonadeStand
         public int _forecastHighTemperature;
         public int _actualHighTemperature;
         public bool _willTheSunShine;
-        string _sunshine;
+        string sunshine;
         public int numberOfPotentialCustomers;
+        public int thirstIndex;
         Random rnd = new Random();
+
+        public Weather()
+        {
+            CheckForecast();
+            SetActualHighTemperature();
+            CalculateThirstIndex();
+        }
+
 
         public void PrintForecast()
         {
             if (_willTheSunShine == true)
             {
-                _sunshine = "sunny";
+                sunshine = "sunny";
             }
-            else _sunshine = "cloudy";
-            Console.WriteLine("The forecast for today is {0} with a high of {1}F.", _sunshine, _forecastHighTemperature, "\n");
+            else sunshine = "cloudy";
+            Console.WriteLine("The forecast for today is {0} with a high of {1}F.", sunshine, _forecastHighTemperature, "\n");
 
         }
 
@@ -46,9 +55,16 @@ namespace LemonadeStand
                 _actualHighTemperature = _forecastHighTemperature;
                 return _actualHighTemperature;
             }
-            
-        
+        }
 
+        int CalculateThirstIndex()
+        {
+            thirstIndex = _actualHighTemperature - 55;
+            if (_willTheSunShine == true)
+            {
+                thirstIndex += thirstIndex;
+            }
+            return thirstIndex;
         }
 
         int SetActualHighTemperature()
@@ -82,7 +98,7 @@ namespace LemonadeStand
             return numberOfPotentialCustomers;
         }
 
-
+       
     }
 
     

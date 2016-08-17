@@ -11,19 +11,19 @@ namespace LemonadeStand
         public decimal dailyProfit = 0;
         public int customerCount = 0;
         public int numberOfCupsSold = 0;
-
-
+        public int lemonadeFervor;
+        public int priceBoost;
         Player _player = new Player();
-        Kitchen _kitchen = new Kitchen();
-        List<Day> days = new List<Day>();
-        
-
+        Inventory _kitchen = new Inventory();
+           
         public void RunGame()
         {
 
-            _player.SetName();
-           
-            for (int i = 0; i < 7; i++)
+            string name = _player.SetName();
+            InitializeGame(name);
+            
+
+            for (int i = 0; i < 2; i++)
             {
                 TakeTurn();
             }
@@ -34,57 +34,68 @@ namespace LemonadeStand
         {
             Day day = new Day();
             Weather _today = new Weather();
-
             int actualHighTemperature = _today.CheckForecast();
+            int thirstIndex = _today.thirstIndex;
             bool sunshine = _today._willTheSunShine;
-            decimal cupPrice = _player.SetPrice();
             int numberOfPotentialCustomers = _today.CalculateNumberOfPotentialCustomers();
 
-            _today.PrintForecast();
-
-            //Console.WriteLine("number of potential customers is {0}", numberOfPotentialCustomers);
-
-            day.CreateCustomers(numberOfPotentialCustomers, cupPrice, actualHighTemperature, sunshine);        
-
-           // _player.SetPrice();
-            Console.WriteLine("Price is ${0}", _player.cupPrice);
-
-            //customer.CalculateChanceOfPurchase();
-            //customer.CalculateThirstLevel();
-            //customer._thirstLevel = customer.CalculateThirst();
-            //customer._chanceOfPurchase = customer._chanceOfPurchase();
-
-            
+            Console.Clear();
 
             _today.PrintForecast();
-            _kitchen.SetBasicRecipe();
+            GoShopping();
+                        
+            decimal cupPrice = _player.SetPrice();
 
-            //Customer _customer = new Customer(_today.numberOfPotentialCustomers);
+            List<Customer> customers = day.CreateCustomers(numberOfPotentialCustomers);
 
-            //for (int i = 0; i < _today.numberOfPotentialCustomers; i++)
-            //{
-            //    _customer.SetLemonadeFervor();
-            //    _customer.CalculateThirst(_today._actualHighTemperature, _today._willTheSunShine);
-            //    //_customer.CalculatePricePointPreference();
-            //    _customer.CalculateChanceOfPurchase(_today._actualHighTemperature);
-            //    if (_customer._chanceOfPurchase == 100)
-            //    {
-            //        numberOfCupsSold++;
-            //    }
-
-                //customerCount++;
-                //_customer.Print(); //un-comment to see each instance of a customer and their preferences
-                ////Console.ReadKey();
-
-            //}
-            //_today.PrintActualWeather();
-            //Console.WriteLine("\nYou sold {0} cups of lemonade to {1} potential customers.", numberOfCupsSold, customerCount);
-            //dailyProfit = (_player.cupPrice * (numberOfCupsSold));
-            //Console.WriteLine("Your gross profit is ${0}", dailyProfit); 
-            //Console.WriteLine("\nPress a key to continue\n");
-            //Console.ReadKey();
-
-
+            int listCount = customers.Count;
+            foreach(Customer customer in customers)
+            {
+                lemonadeFervor = customer._lemonadeFervor;
+                CheckForSale(thirstIndex, cupPrice);
+            }
+            Console.WriteLine("cups sold = {0}", numberOfCupsSold);
+            _kitchen.AdjustInventory(numberOfCupsSold);
+            Console.WriteLine("You made ${0}", numberOfCupsSold * cupPrice, " today!");
+            Console.ReadKey();
         }
+
+
+        //methods go down here
+        public void InitializeGame(string name)
+        {
+            Console.Clear();
+            Console.WriteLine("Hello, {0}! You will start with $20 to purchase supplies\n"+
+                               "for your lemonade stand. You will have a chance to check\n"+
+                               "your inventory and purchase any additional needed supplies\n"+
+                               "each day based on the funds you have earned.\n", name);
+
+            Console.WriteLine("Let's start by checking the weather for today.\n", name);
+            Console.WriteLine("Press a key to continue\n");
+            Console.ReadKey();
+        }
+
+        public int CheckForSale(int thirstIndex, decimal cupPrice)
+        {
+            int _cupPriceInteger = Decimal.ToInt32(cupPrice * 100);
+            priceBoost = -(_cupPriceInteger - 150);
+
+            int chanceOfPurchase = lemonadeFervor + thirstIndex + priceBoost;
+            if (chanceOfPurchase > 100)
+            {
+                numberOfCupsSold++;
+                return numberOfCupsSold;
+            }
+            else return numberOfCupsSold;
+        }
+
+        public void GoShopping()
+        {
+            _kitchen.CheckCupboard();
+
+            _kitchen.GoGroceryShopping();
+        }
+
+        
     }
 }

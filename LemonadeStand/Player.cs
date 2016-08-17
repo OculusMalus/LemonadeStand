@@ -17,9 +17,6 @@ namespace LemonadeStand
         {
             Console.WriteLine("Hello, welcome to the world of Lemonade Stand! Please enter your name: \n");
             name = Console.ReadLine();
-            Console.WriteLine("Hello, {0}! Let's check the weather for today.\n", name);
-            Console.WriteLine("Press a key to continue\n");
-            Console.ReadKey();
             return name;
         }
 

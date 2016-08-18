@@ -42,7 +42,10 @@ namespace LemonadeStand
             return cashBox;
         }
 
-        
+        public decimal HowMuchMoneyDoIHave(decimal cashOnHand)
+        {
+            return cashBox;
+        }
        
     }
      

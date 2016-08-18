@@ -8,7 +8,6 @@ namespace LemonadeStand
 {
     class Game
     {
-        public decimal dailyProfit = 0;
         public int customerCount = 0;
         public int numberOfCupsSold = 0;
         public int lemonadeFervor;
@@ -22,7 +21,7 @@ namespace LemonadeStand
 
             string name = _player.SetName();
             InitializeGame(name);
-            
+                       
 
             for (int i = 0; i < 2; i++)
             {
@@ -60,9 +59,10 @@ namespace LemonadeStand
             Console.Clear();
 
             numberOfCupsSold = _kitchen.HowManyCupsDidIReallySell(numberOfCupsSold, batch);
+            decimal dailyGross = CalculateDailySales(_player,numberOfCupsSold, cupPrice);
             _kitchen.AdjustInventory(numberOfCupsSold);
-
-            Console.WriteLine("You made ${0}", numberOfCupsSold * cupPrice, " today!");
+           
+            Console.WriteLine("You made ${0}", dailyGross, " today!");
             Console.ReadKey();
         }
 
@@ -101,11 +101,16 @@ namespace LemonadeStand
 
         public void GoShopping()
         {
-            _kitchen.CheckCupboard();
+            _kitchen.CheckCupboard(_player);
             _kitchen.GoGroceryShopping(_player);
             batch = _kitchen.HowMuchLemonadeCanIMakeToday();
         }
 
-        
+        public decimal CalculateDailySales(Player _player,int numberOfCupsSold, decimal cupPrice)
+        {
+            decimal dailyGross = numberOfCupsSold * cupPrice;
+            _player.StashCashBox(dailyGross);
+            return dailyGross;
+        }
     }
 }

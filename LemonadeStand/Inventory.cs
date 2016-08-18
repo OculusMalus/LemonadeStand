@@ -16,7 +16,7 @@ namespace LemonadeStand
         public int plasticCups;
         public int madeThisManyCups;
         public int todayICanMake;
-        public decimal cashOnHand = 20.00m;
+        public decimal cashOnHand;
         public decimal priceOfLemons = 0.59m;
         public decimal priceOfSugar = 5.49m;
         public decimal priceOfIce = 1.99m;
@@ -36,10 +36,10 @@ namespace LemonadeStand
 
         public int HowMuchLemonadeCanIMakeToday()
         {
-            int lemonsCanMake = lemons * 8 / 3;
+            int lemonsCanMake = lemons * 8/3;
             int sugarCanMake = cupsOfSugar * 8;
             int iceCanMake = (poundsOfIce +9)* 10;
-            int cupsCanServe = plasticCups*100;
+            int cupsCanServe = plasticCups;
             int[] maxBatchArray = { lemonsCanMake, sugarCanMake, iceCanMake, cupsCanServe };
             todayICanMake = maxBatchArray.Min();      //figure out how to choose the smallest value from the four ingredients`
             Console.WriteLine("You can make {0} cups of lemondade with these ingredients.\n",todayICanMake);
@@ -94,6 +94,7 @@ namespace LemonadeStand
 
         public void GoGroceryShopping(Player _player)
         {
+            
             Console.WriteLine("You need to purchase some ingedients and supplies for your\n" +
                                 "lemonade stand. Let's go shopping!\n");
             Console.WriteLine("");
@@ -104,23 +105,24 @@ namespace LemonadeStand
             BuyIce(_player);
             Console.WriteLine("you have ${0} left to spend.\n", cashOnHand);
             BuyPlasticCups(_player);
-
-                    
+                 
         }
 
-        public void CheckCupboard()
+        public void CheckCupboard(Player _player)
         {
+            cashOnHand = _player.HowMuchMoneyDoIHave(cashOnHand);
             Console.WriteLine("Let's see if you have all the ingredients you need.\n");
-            Console.WriteLine("You have:\n"+
-                "Lemons\t Cups Sugar\t Pounds Ice\t Plastic Cups\n"+
+            Console.WriteLine("You have:\n" +
+                "Lemons\t Cups Sugar\t Pounds Ice\t Plastic Cups\n" +
                 "{0}\t {1}\t\t {2}\t\t {3}\n", lemons, cupsOfSugar, poundsOfIce, plasticCups);
+            Console.WriteLine("You have ${0} available to spend.", cashOnHand);
         }
 
         public int BuyLemons(Player _player)
         {
-            Console.WriteLine("Large lemons cost $0.59 each. You need three large lemons\n"+
+            Console.WriteLine("Large lemons cost ${0} each. You need three large lemons\n"+
                                 "to make 8 cups of basic lemonade." +" How many large lemons\n"+
-                                "do you want to purchase for today?\n");
+                                "do you want to purchase for today?\n",priceOfLemons);
             string lemonString = Console.ReadLine();
             int newItem = int.Parse(lemonString);
             decimal itemPrice = priceOfLemons;
@@ -131,9 +133,9 @@ namespace LemonadeStand
 
         public int BuySugar(Player _player)
         {
-            Console.WriteLine("A 10 pound bag of sugar costs $5.49 and contains 20 cups of\n"+
+            Console.WriteLine("A 10 pound bag of sugar costs ${0} and contains 20 cups of\n"+
                                 "sugar. You need one cup of sugar to " + "make 8 cups of lemonade.\n"+
-                                "How many bags of sugar will you purchase today?");
+                                "How many bags of sugar will you purchase today?",priceOfSugar);
             string sugarString = Console.ReadLine();
             int newItem = int.Parse(sugarString);
             decimal itemPrice = priceOfSugar;
@@ -156,13 +158,13 @@ namespace LemonadeStand
 
         public int BuyPlasticCups(Player _player)
         {
-            Console.WriteLine("Your plastic cups come in packages of 100 that cost $4.98. How\n"+
-                                "many packges do you want to buy today?");
+            Console.WriteLine("Your plastic cups come in packages of 100 that cost ${0}. How\n"+
+                                "many packges do you want to buy today?",priceOfCups);
             string cupString = Console.ReadLine();
             int newItem = int.Parse(cupString);
             decimal itemPrice = priceOfCups;
             newItem = BuyItem(_player, newItem, itemPrice);
-            plasticCups += newItem;
+            plasticCups += newItem*100;
             return plasticCups;
         }
 
@@ -193,7 +195,6 @@ namespace LemonadeStand
                 cashOnHand = _player.SpendCashBox(amountSpent);
                 return newItem;
             }
-
             else
             {
                 newItem = 0;
@@ -222,6 +223,8 @@ namespace LemonadeStand
             }
 
         }
+
+        
         
     }
 }

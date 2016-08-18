@@ -13,6 +13,7 @@ namespace LemonadeStand
         public int numberOfCupsSold = 0;
         public int lemonadeFervor;
         public int priceBoost;
+        public int batch;
         Player _player = new Player();
         Inventory _kitchen = new Inventory();
            
@@ -54,8 +55,13 @@ namespace LemonadeStand
                 lemonadeFervor = customer._lemonadeFervor;
                 CheckForSale(thirstIndex, cupPrice);
             }
-            Console.WriteLine("cups sold = {0}", numberOfCupsSold);
+            Console.WriteLine("You could have sold {0} cups of lemonade today, based on demand.\n" +
+                                "Let's see how you did!");
+            Console.Clear();
+
+            numberOfCupsSold = _kitchen.HowManyCupsDidIReallySell(numberOfCupsSold, batch);
             _kitchen.AdjustInventory(numberOfCupsSold);
+
             Console.WriteLine("You made ${0}", numberOfCupsSold * cupPrice, " today!");
             Console.ReadKey();
         }
@@ -65,11 +71,15 @@ namespace LemonadeStand
         public void InitializeGame(string name)
         {
             Console.Clear();
-            Console.WriteLine("Hello, {0}! You will start with $20 to purchase supplies\n"+
-                               "for your lemonade stand. You will have a chance to check\n"+
-                               "your inventory and purchase any additional needed supplies\n"+
-                               "each day based on the funds you have earned.\n", name);
-
+            Console.WriteLine("Hello, {0}! You will start with $25 to purchase supplies\n" +
+                               "for your lemonade stand. You will have a chance to check\n" +
+                               "your inventory and purchase any additional needed supplies\n" +
+                               "each day based on the funds you have earned. Try to accurately\n" +
+                               "predict how much lemonade to made based on the weather forecast.\n" +
+                               "You will make more money if you don't run out! On the other hand,\n" +
+                               "you don't want to make too much. You will keep an inventory of\n" +
+                               "ingredients, but will make a new batch of lemonade each day.\n", name); 
+                               
             Console.WriteLine("Let's start by checking the weather for today.\n", name);
             Console.WriteLine("Press a key to continue\n");
             Console.ReadKey();
@@ -77,23 +87,23 @@ namespace LemonadeStand
 
         public int CheckForSale(int thirstIndex, decimal cupPrice)
         {
-            int _cupPriceInteger = Decimal.ToInt32(cupPrice * 100);
-            priceBoost = -(_cupPriceInteger - 150);
+                int _cupPriceInteger = Decimal.ToInt32(cupPrice * 100);
+                priceBoost = -(_cupPriceInteger - 150);
 
-            int chanceOfPurchase = lemonadeFervor + thirstIndex + priceBoost;
-            if (chanceOfPurchase > 100)
-            {
-                numberOfCupsSold++;
-                return numberOfCupsSold;
-            }
-            else return numberOfCupsSold;
+                int chanceOfPurchase = lemonadeFervor + thirstIndex + priceBoost;
+                if (chanceOfPurchase > 100)
+                {
+                    numberOfCupsSold++;
+                    return numberOfCupsSold;
+                }
+                else return numberOfCupsSold;
         }
 
         public void GoShopping()
         {
             _kitchen.CheckCupboard();
-
-            _kitchen.GoGroceryShopping();
+            _kitchen.GoGroceryShopping(_player);
+            batch = _kitchen.HowMuchLemonadeCanIMakeToday();
         }
 
         

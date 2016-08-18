@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
+    
     class Player
     {
         public string name;
         public string cupPriceString;
         public decimal cupPrice;
+        public decimal cashBox = 25.00m;
             
 
         public string SetName()
@@ -28,6 +30,19 @@ namespace LemonadeStand
             return cupPrice;
         }
 
+        public decimal SpendCashBox(decimal amount)
+        {
+            cashBox -= amount;
+            return cashBox;
+        }
+
+        public decimal StashCashBox(decimal amount)
+        {
+            cashBox += amount;
+            return cashBox;
+        }
+
+        
        
     }
      

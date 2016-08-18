@@ -8,14 +8,19 @@ namespace LemonadeStand
 {
     class Inventory
     {
-        public int batchSize = 200;//please change when done testing
-        public int lemons=50;//please change to test
+        public int lemons;
         public int cupsOfSugar;
         public int bagsOfSugar;
         public int poundsOfIce;
         public int bagsOfIce;
         public int plasticCups;
         public int madeThisManyCups;
+        public int todayICanMake;
+        public decimal cashOnHand = 20.00m;
+        public decimal priceOfLemons = 0.59m;
+        public decimal priceOfSugar = 5.49m;
+        public decimal priceOfIce = 1.99m;
+        public decimal priceOfCups = 2.19m;
         int[] inventoryItems = new int[5];
 
                
@@ -32,13 +37,23 @@ namespace LemonadeStand
         public int HowMuchLemonadeCanIMakeToday()
         {
             int lemonsCanMake = lemons * 8 / 3;
-            return lemonsCanMake;
+            int sugarCanMake = cupsOfSugar * 8;
+            int iceCanMake = (poundsOfIce +9)* 10;
+            int cupsCanServe = plasticCups*100;
+            int[] maxBatchArray = { lemonsCanMake, sugarCanMake, iceCanMake, cupsCanServe };
+            todayICanMake = maxBatchArray.Min();      //figure out how to choose the smallest value from the four ingredients`
+            Console.WriteLine("You can make {0} cups of lemondade with these ingredients.\n",todayICanMake);
+            return todayICanMake;
         }
         public int AdjustLemonInventory(int numberOfCupsSold)
         {
             int lemonsUsed = (numberOfCupsSold + 7) *3/ 8; //must round up for any part of a lemon that was used
             Console.WriteLine("you used {0} lemons!", lemonsUsed);
             lemons -= lemonsUsed;
+            if (lemons < 0)
+            {
+                lemons = 0;
+            }
             return lemons;
         }
 
@@ -46,6 +61,10 @@ namespace LemonadeStand
         {
             int cupsOfSugarUsed = (numberOfCupsSold +7) / 8; //1 cup of sugar makes 8 cups of lemonade
             cupsOfSugar -= cupsOfSugarUsed;
+            if (cupsOfSugar < 0)
+            {
+                cupsOfSugar = 0;
+            }
             Console.WriteLine("you used {0} cups of sugar!", cupsOfSugarUsed);
             return cupsOfSugar;
         }
@@ -54,6 +73,10 @@ namespace LemonadeStand
         {
             int poundsOfIceUsed = (numberOfCupsSold +9 )/ 10; //1 pound of ice for each 10 cups
             poundsOfIce -= poundsOfIceUsed;  //take the pounds used out of the ten pound bags purchased.
+            if (poundsOfIce < 0)
+            {
+                poundsOfIce = 0;
+            }
             Console.WriteLine("you used {0} pounds of ice!", poundsOfIceUsed);
             return poundsOfIce;
         }
@@ -61,65 +84,91 @@ namespace LemonadeStand
         public int AdjustPlasticCupInventory(int numberOfCupsSold)
         {
             plasticCups -= numberOfCupsSold;
+            if (plasticCups < 0)
+            {
+                plasticCups = 0;
+            }
             Console.WriteLine("you used {0} cups!", numberOfCupsSold);
             return plasticCups;
         }
 
-        public void GoGroceryShopping()
+        public void GoGroceryShopping(Player _player)
         {
-            Console.WriteLine("You need to purchase some ingedients and supplies for your lemonade stand. Let's go shopping!\n");
-            BuyLemons();
-            
+            Console.WriteLine("You need to purchase some ingedients and supplies for your\n" +
+                                "lemonade stand. Let's go shopping!\n");
+            Console.WriteLine("");
+            BuyLemons(_player);
+            Console.WriteLine("you have ${0} left to spend.\n", cashOnHand);
+            BuySugar(_player);
+            Console.WriteLine("you have ${0} left to spend.\n", cashOnHand);
+            BuyIce(_player);
+            Console.WriteLine("you have ${0} left to spend.\n", cashOnHand);
+            BuyPlasticCups(_player);
+
+                    
         }
 
         public void CheckCupboard()
         {
             Console.WriteLine("Let's see if you have all the ingredients you need.\n");
-            Console.WriteLine("You have {0} lemons, {1} cups of sugar, {2} bags of ice, and {3} plastic cups on hand right now.\n", lemons, cupsOfSugar, poundsOfIce, plasticCups);
+            Console.WriteLine("You have:\n"+
+                "Lemons\t Cups Sugar\t Pounds Ice\t Plastic Cups\n"+
+                "{0}\t {1}\t\t {2}\t\t {3}\n", lemons, cupsOfSugar, poundsOfIce, plasticCups);
         }
 
-        public int BuyLemons()
+        public int BuyLemons(Player _player)
         {
-            Console.WriteLine("Large lemons cost $0.79 each. You need three large lemons to make 8 cups of basic lemonade." +
-                " How many large lemons do you want to purchase for today?\n");
+            Console.WriteLine("Large lemons cost $0.59 each. You need three large lemons\n"+
+                                "to make 8 cups of basic lemonade." +" How many large lemons\n"+
+                                "do you want to purchase for today?\n");
             string lemonString = Console.ReadLine();
-            int newLemons = int.Parse(lemonString);
-            lemons = lemons + newLemons;
+            int newItem = int.Parse(lemonString);
+            decimal itemPrice = priceOfLemons;
+            newItem = BuyItem(_player, newItem, itemPrice);
+            lemons += newItem;
             return lemons;
         }
 
-        public int BuySugar()
+        public int BuySugar(Player _player)
         {
-            Console.WriteLine("A 10 pound bag of sugar costs $5.49 and contains 20 cups of sugar. You need one cup of sugar to " +
-                "make 8 cups of lemonade. How many bags of sugar will you purchase today?");
+            Console.WriteLine("A 10 pound bag of sugar costs $5.49 and contains 20 cups of\n"+
+                                "sugar. You need one cup of sugar to " + "make 8 cups of lemonade.\n"+
+                                "How many bags of sugar will you purchase today?");
             string sugarString = Console.ReadLine();
-            bagsOfSugar = int.Parse(sugarString);
-            cupsOfSugar = bagsOfSugar * 20;
+            int newItem = int.Parse(sugarString);
+            decimal itemPrice = priceOfSugar;
+            newItem = BuyItem(_player, newItem, itemPrice);
+            cupsOfSugar += newItem * 20;
             return cupsOfSugar;
         }
 
-        public int BuyIce()
+        public int BuyIce(Player _player)
         {
-            Console.WriteLine("A ten pound bag of ice costs $2.49 and will chill 50 servings of lemonade. How many 10 pound bags of ice will" +
-                " you purchase today?");
+            Console.WriteLine("A ten pound bag of ice costs ${0} and will chill 50 servings\n"+
+                                "of lemonade. How many 10 pound bags of ice will you purchase today?",priceOfIce);
             string iceString = Console.ReadLine();
-            bagsOfIce = int.Parse(iceString);
-            poundsOfIce = bagsOfIce/10; //adding a full 10 pounds each time you purchase.
+            int newItem = int.Parse(iceString);
+            decimal itemPrice = priceOfIce;
+            newItem = BuyItem(_player, newItem, itemPrice);
+            poundsOfIce += newItem*10; //adding a full 10 pounds each time you purchase.
             return poundsOfIce;
         }
 
-        public int BuyPlasticCups()
+        public int BuyPlasticCups(Player _player)
         {
-            Console.WriteLine("Your plastic cups come in packages of 100. How many packges do you want to buy today?");
+            Console.WriteLine("Your plastic cups come in packages of 100 that cost $4.98. How\n"+
+                                "many packges do you want to buy today?");
             string cupString = Console.ReadLine();
-            plasticCups = int.Parse(cupString);
+            int newItem = int.Parse(cupString);
+            decimal itemPrice = priceOfCups;
+            newItem = BuyItem(_player, newItem, itemPrice);
+            plasticCups += newItem;
             return plasticCups;
-
         }
 
         public int SetBasicRecipe()
         {
-            Console.WriteLine("How many cups of lemonade can you sell on a day like today?");
+            Console.WriteLine("Try to predict how many cups of lemonade can you sell on a day like today:");
             string cupString = Console.ReadLine();
             madeThisManyCups = int.Parse(cupString);
 
@@ -132,9 +181,48 @@ namespace LemonadeStand
             decimal _investment = (decimal)Math.Round(bagsOfIce * 2.49 + bagsOfSugar * 5.49 + lemons * 0.79);
             Console.WriteLine("You spent ${0} on ingredients", _investment);
             return lemons;
-            //return tenPoundBagOfIce;
+            
 
         }
+
+        public int BuyItem(Player _player, int newItem, decimal itemPrice)
+        {
+            decimal amountSpent = (Decimal)newItem * itemPrice;
+            if (cashOnHand - amountSpent > 0m)
+            {
+                cashOnHand = _player.SpendCashBox(amountSpent);
+                return newItem;
+            }
+
+            else
+            {
+                newItem = 0;
+                Console.WriteLine("Check your math. You don't have enough cash on hand to\n" +
+                                    "buy that many. Let's try again. you have ${0} left to spend.", cashOnHand);
+                Console.ReadKey();
+                GoGroceryShopping(_player);
+            }
+            return newItem;
+        }
+
+            public int HowManyCupsDidIReallySell(int numberOfCupsSold, int batch)
+        {
+            if( batch > numberOfCupsSold)
+            {
+                Console.WriteLine("Great job! You sold {0} cups of lemonade today!", batch);
+                return numberOfCupsSold;
+            }
+            else
+            {
+                Console.WriteLine("Too bad you didn't have more ingredients on hand.\n" +
+                                    "You could have sold {0} cups but you only had enough\n" +
+                                    "to make {1} before you sold out. Try to do better tomorrow.",
+                                    numberOfCupsSold, batch);
+                return batch;
+            }
+
+        }
+        
     }
 }
     

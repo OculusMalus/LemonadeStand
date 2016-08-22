@@ -17,7 +17,8 @@ namespace LemonadeStand
 
         public string SetName()
         {
-            Console.WriteLine("Hello, welcome to the world of Lemonade Stand! Please enter your name: \n");
+            Console.WriteLine("Hello, welcome to Lemonade Stand! You will have the opportunity\n"+
+                                "to build a lemonade empire over the next seven days.\nPlease enter your name: \n");
             name = Console.ReadLine();
             return name;
         }
@@ -25,6 +26,7 @@ namespace LemonadeStand
         public decimal SetPrice()
         {
             Console.WriteLine("How much will you charge per cup?\n");
+            Console.Write("$");
             cupPriceString = Console.ReadLine();
             cupPrice = decimal.Parse(cupPriceString);
             return cupPrice;
@@ -42,12 +44,9 @@ namespace LemonadeStand
             return cashBox;
         }
 
-        public decimal HowMuchMoneyDoIHave(decimal cashOnHand)
+        public decimal HowMuchMoneyDoIHave()
         {
             return cashBox;
         }
-       
     }
-     
-    
 }

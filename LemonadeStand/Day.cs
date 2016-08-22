@@ -19,10 +19,12 @@ namespace LemonadeStand
                 Customer customer = new Customer();
                 Console.Clear();
                 Console.WriteLine("Selling delicious lemonade to happy people...be patient...");
+                //customer.PrintCustomer();
                 customerCount++;
                 customers.Add(customer);
                 Thread.Sleep(25);
             }
+            //Console.ReadKey();
             return customers;
         }
     }

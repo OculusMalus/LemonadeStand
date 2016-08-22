@@ -19,6 +19,7 @@ namespace LemonadeStand
         public Weather()
         {
             CheckForecast();
+            CheckForSunshine();
             SetActualHighTemperature();
             CalculateThirstIndex();
         }
@@ -26,6 +27,7 @@ namespace LemonadeStand
 
         public void PrintForecast()
         {
+            CheckForSunshine();
             if (_willTheSunShine == true)
             {
                 sunshine = "sunny";
@@ -62,7 +64,7 @@ namespace LemonadeStand
             thirstIndex = _actualHighTemperature - 55;
             if (_willTheSunShine == true)
             {
-                thirstIndex += thirstIndex;
+                thirstIndex += thirstIndex/2;
             }
             return thirstIndex;
         }

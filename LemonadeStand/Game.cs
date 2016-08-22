@@ -43,7 +43,7 @@ namespace LemonadeStand
                 salesGrandTotal += sales[i];
             }
             salesNet = _player.HowMuchMoneyDoIHave();
-            Console.WriteLine("\nYour sales totalled ${0}", salesGrandTotal);
+            Console.WriteLine("\nYour sales totaled ${0}", salesGrandTotal);
             Console.WriteLine("\nAfter expenses, you pocket ${0}!", salesNet);
         }
 

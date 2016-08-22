@@ -58,6 +58,7 @@ namespace LemonadeStand
 
             Console.Clear();
             _today.PrintForecast();
+            _kitchen.SetRecipe();
             GoShopping();
                         
             decimal cupPrice = _player.SetPrice();

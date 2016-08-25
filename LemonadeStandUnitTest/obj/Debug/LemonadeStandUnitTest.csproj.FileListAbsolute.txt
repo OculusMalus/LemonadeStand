@@ -1,0 +1,9 @@
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\obj\Debug\LemonadeStandUnitTest.csprojResolveAssemblyReference.cache
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\bin\Debug\LemonadeStandUnitTest.dll
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\bin\Debug\LemonadeStandUnitTest.pdb
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\bin\Debug\LemonadeStand.exe
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\bin\Debug\LemonadeStand.pdb
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\obj\Debug\LemonadeStandUnitTest.dll
+C:\Users\Stef\Documents\GitHub\LemonadeStand\LemonadeStandUnitTest\obj\Debug\LemonadeStandUnitTest.pdb
